@@ -1,0 +1,19 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "prettier", "prettier/babel"],
+  "plugins": ["babel", "jest"],
+  "rules": {
+    "prefer-arrow-callback": "error",
+    "prefer-spread": "error",
+    "prefer-rest-params": "error",
+    "prefer-numeric-literals": "error",
+    "prefer-destructuring": "error",
+    "prefer-const": "error",
+    "prefer-template": "error"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  }
+}

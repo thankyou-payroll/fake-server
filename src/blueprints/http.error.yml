@@ -1,0 +1,26 @@
+type: object
+properties:
+  error:
+    type: object
+    properties:
+      code:
+        type: "number"
+        chance:
+          pickone:
+            - [401, 403, 404, 500]
+      message:
+        type: string
+        chance:
+          sentence:
+            words: 5
+    required:
+      - code
+      - message
+required:
+  - error
+definitions:
+  positiveInt:
+    type: integer
+    minimum: 400
+    maximum: 500
+    exclusiveMinimum: true

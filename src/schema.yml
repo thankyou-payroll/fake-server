@@ -1,0 +1,8 @@
+rest:
+  - path: /login
+    method: post
+    success: login.success
+    error: http.error
+  - path: /users
+    success: users.success
+    error: http.error
