@@ -15,4 +15,4 @@ COPY . /workspace
 
 EXPOSE 3000
 
-CMD ["node","index.js"]
+CMD ["yarn","dev"]
