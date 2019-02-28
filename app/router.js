@@ -1,11 +1,14 @@
-import qs from "qs";
-import { rest, webSocket, multiPart } from "./faker";
+import qs from 'qs';
+import { rest, webSocket, multiPart } from './faker';
+import log from './log';
 
 const {
-  REST_API_PATH = "/api",
-  MULTI_PART_PATH = "/upload",
-  WEB_SOCKET_PATH = "/ws"
+  REST_API_PATH = '/api',
+  MULTI_PART_PATH = '/upload',
+  WEB_SOCKET_PATH = '/ws',
 } = process.env;
+
+const errorDefault = payload => ({ status: 404, payload });
 
 const jsonResponse = (ctx, { status, payload }) => {
   ctx.status = status;
@@ -14,19 +17,20 @@ const jsonResponse = (ctx, { status, payload }) => {
 
 export default () => async ctx => {
   const { method, url, body } = ctx.request;
-  const [path, queryString] = url.split("?");
-  const [root, ...endpoint] = path.replace("/", "").split("/");
+  const [path, queryString] = url.split('?');
+  const [root, ...endpoint] = path.replace('/', '').split('/');
   const basePath = `/${root}`;
-  const endpointPath = `/${endpoint.join("/")}`;
+  const endpointPath = `/${endpoint.join('/')}`;
   const params = {
     path: endpointPath,
     method: method.toLowerCase(),
     queryString: qs.parse(queryString),
-    body
+    body,
   };
+  log.params(params);
   switch (basePath) {
     case REST_API_PATH:
-      jsonResponse(ctx, rest(params));
+      jsonResponse(ctx, rest(params) || errorDefault(params));
       break;
     case MULTI_PART_PATH:
       multiPart(ctx);
@@ -35,6 +39,6 @@ export default () => async ctx => {
       jsonResponse(ctx, webSocket(params));
       break;
     default:
-      jsonResponse(ctx, { status: 404, payload: params });
+      jsonResponse(ctx, errorDefault(params));
   }
 };
