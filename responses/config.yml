@@ -1,0 +1,20 @@
+rest:
+  - path: /login
+    method: post
+    validate:
+      body:
+        email: "test@test.com"
+        password: "my-password"
+    success: login.success
+    error: 401.error
+  - path: /users
+    success: users.success
+    error: 401.error
+    validate:
+      queryString:
+        token: my-secret
+multiPart:
+  - name: "avatar"
+    maxCount: 1
+  - name: "gallery"
+    maxCount: 8

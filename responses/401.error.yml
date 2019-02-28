@@ -1,13 +1,12 @@
 type: object
+httpCode: 401
 properties:
   error:
     type: object
     properties:
       code:
         type: "number"
-        chance:
-          pickone:
-            - [401, 403, 404, 500]
+        enum: [401]
       message:
         type: string
         chance:
