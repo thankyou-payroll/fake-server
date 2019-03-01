@@ -13,7 +13,7 @@
     "docker:build": "docker build -t fake-server .",
     "docker:tag": "docker tag fake-server thankyoupayroll/fake-server:latest",
     "docker:push": "docker push thankyoupayroll/fake-server:latest",
-    "publish": "run-s docker:build docker:tag docker:push"
+    "docker:publish": "run-s docker:build docker:tag docker:push"
   },
   "jest": {
     "testURL": "http://localhost/",

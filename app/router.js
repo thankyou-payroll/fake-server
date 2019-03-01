@@ -15,6 +15,31 @@ const jsonResponse = (ctx, { status, payload }) => {
   ctx.body = payload;
 };
 
+const processRest = (ctx, params) => {
+  const type = 'REST';
+  const payload = rest(params) || errorDefault(params);
+  jsonResponse(ctx, payload);
+  log.params({ type, payload, ...params });
+};
+const processMultiPart = (ctx, params) => {
+  const type = 'Multi Part';
+  const payload = 'File';
+  multiPart(ctx);
+  log.params({ type, payload, ...params });
+};
+const processWebSocket = (ctx, params) => {
+  const type = 'Web Socket';
+  const payload = webSocket(params) || errorDefault(params);
+  jsonResponse(ctx, payload);
+  log.params({ type, payload, ...params });
+};
+const processErrorDefault = (ctx, params) => {
+  const type = 'Error';
+  const payload = errorDefault(params);
+  jsonResponse(ctx, payload);
+  log.params({ type, payload, ...params });
+};
+
 export default () => async ctx => {
   const { method, url, body } = ctx.request;
   const [path, queryString] = url.split('?');
@@ -27,18 +52,17 @@ export default () => async ctx => {
     queryString: qs.parse(queryString),
     body,
   };
-  log.params(params);
   switch (basePath) {
     case REST_API_PATH:
-      jsonResponse(ctx, rest(params) || errorDefault(params));
+      processRest(ctx, params);
       break;
     case MULTI_PART_PATH:
-      multiPart(ctx);
+      processMultiPart(ctx, params);
       break;
     case WEB_SOCKET_PATH:
-      jsonResponse(ctx, webSocket(params));
+      processWebSocket(ctx, params);
       break;
     default:
-      jsonResponse(ctx, errorDefault(params));
+      processErrorDefault(ctx, params);
   }
 };
