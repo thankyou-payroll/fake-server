@@ -13,7 +13,7 @@ const getYaml = fileName => {
   return parse(content);
 };
 
-const getRest = ({ path, method = 'get', validate, success, error }) => ({
+const getRest = ({ path, method = 'get', validate = {}, success, error }) => ({
   path,
   method,
   validate: ({ queryString, body }) =>
