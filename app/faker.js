@@ -1,12 +1,12 @@
-import faker from "faker";
-import Chance from "chance";
-import jsf from "json-schema-faker";
-import { rest, multiPart, webSocket } from "./config";
+import faker from 'faker';
+import Chance from 'chance';
+import jsf from 'json-schema-faker';
+import { rest, multiPart, webSocket } from './config';
 
-jsf.extend("faker", () => faker);
-jsf.extend("chance", () => new Chance());
+jsf.extend('faker', () => faker);
+jsf.extend('chance', () => new Chance());
 
-const getRest = ({ path, method = "get", queryString, body }) =>
+const getRest = ({ path, method = 'get', queryString, body }) =>
   rest
     .filter(e => e.method === method && e.path === path)
     .map(e => {
@@ -30,4 +30,10 @@ const getWebSocket = ({ event, params }) =>
       }
     })[0];
 
-export { getRest as rest, multiPart, getWebSocket as webSocket };
+const getMultiPart = ({ path }) => multiPart.filter(m => m.path === path)[0];
+
+export {
+  getRest as rest,
+  getMultiPart as multiPart,
+  getWebSocket as webSocket,
+};

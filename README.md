@@ -7,7 +7,6 @@ Dockerized Fake server toolkit for development and testing
 ```
 REST_API_PATH = "/api",
 MULTI_PART_PATH = "/upload",
-WEB_SOCKET_PATH = "/ws"
 ```
 
 # Usage
@@ -20,8 +19,8 @@ rest:
     method: post
     validate:
       body:
-        email: "test@test.com"
-        password: "my-password"
+        email: 'test@test.com'
+        password: 'my-password'
     success: login.success
     error: 401.error
   - path: /users
@@ -31,19 +30,19 @@ rest:
       queryString:
         token: my-secret
 multiPart:
-  - name: "avatar"
-    maxCount: 1
-  - name: "gallery"
-    maxCount: 8
+  - path:
+    fields:
+      - name: 'avatar'
+        maxCount: 1
+      - name: 'gallery'
+        maxCount: 8
 ```
 
 ## `rest`
 
 ### Properties
 
-_path_: Endpoint you want to mock
-_method_: HTTP Method
-_validate_: (Optional)
+_path_: Endpoint you want to mock _method_: HTTP Method _validate_: (Optional)
 
     _body_: Object with values to validate for success
     _queryString_: Object with values to validate for success
@@ -55,13 +54,13 @@ _error_: Name of the yaml file that has the blueprint for the error payload
 
 ### Properties
 
-_name_: `name` of your InputFile
-_maxCount_: Max amount of files allowed on the queue
+_name_: `name` of your InputFile _maxCount_: Max amount of files allowed on the
+queue
 
 # Using with Docker
 
 ```yml
-version: "3"
+version: '3'
 services:
   app:
     build: .
@@ -76,7 +75,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - "./__mocks__/:/workspace/responses"
+      - './__mocks__/:/workspace/responses'
 ```
 
 # TODO

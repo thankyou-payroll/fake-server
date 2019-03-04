@@ -15,6 +15,4 @@ COPY . /workspace
 
 EXPOSE 3000
 
-VOLUME ["/workspace", "/workspace/responses"]
-
 CMD ["yarn","dev"]

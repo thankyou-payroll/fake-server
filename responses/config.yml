@@ -3,8 +3,8 @@ rest:
     method: post
     validate:
       body:
-        email: "test@test.com"
-        password: "my-password"
+        email: test@test.com
+        password: my-password
     success: login.success
     error: 401.error
   - path: /users
@@ -14,7 +14,7 @@ rest:
       queryString:
         token: my-secret
 multiPart:
-  - name: "avatar"
+  - name: avatar
     maxCount: 1
-  - name: "gallery"
+  - name: gallery
     maxCount: 8
