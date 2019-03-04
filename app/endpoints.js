@@ -22,17 +22,17 @@ const getRest = ({ path, method = 'get', validate = {}, success, error }) => ({
   success: success && getYaml(success),
   error: error && getYaml(error),
 });
-const getMultiPart = ({ path, fields }) => ({
+const getMultiPart = ({ path, multiPart: files }) => ({
   path,
-  upload: upload.fields(fields),
+  upload: upload.fields(files),
 });
 const getWebSocket = ({ event, message }) => ({ event, message });
 
 const getConfig = () => {
-  const { rest = [], multiPart = [], webSocket = [] } = getYaml('config');
+  const { rest = [], webSocket = [] } = getYaml('config');
   return {
-    rest: rest.map(getRest),
-    multiPart: multiPart.map(getMultiPart),
+    rest: rest.filter(r => !r.multiPart).map(getRest),
+    multiPart: rest.filter(r => !!r.multiPart).map(getMultiPart),
     webSocket: webSocket.map(getWebSocket),
   };
 };

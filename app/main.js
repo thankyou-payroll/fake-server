@@ -15,7 +15,7 @@ export default new Promise(resolve => {
     .use(cors())
     .listen(PORT, () => {
       log.success(`Server started on port ${PORT}`); // eslint-disable-line
-      resolve(PORT);
+      resolve(app);
     });
 });
 

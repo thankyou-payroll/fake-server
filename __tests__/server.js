@@ -9,7 +9,7 @@ const req = axios.create({
 describe("Server", async () => {
   it("Connect", async () => {
     expect.assertions(1);
-    const port = await server;
+    const ({app, port}) = await server;
     expect(port).toBe(3000);
   });
 

@@ -5,8 +5,7 @@ Dockerized Fake server toolkit for development and testing
 # Environmental Variables (Defaults)
 
 ```
-REST_API_PATH = "/api",
-MULTI_PART_PATH = "/upload",
+API_PATH = "/api",
 ```
 
 # Usage
@@ -29,12 +28,12 @@ rest:
     validate:
       queryString:
         token: my-secret
-multiPart:
-  - path:
-    fields:
-      - name: 'avatar'
+  - path: /avatar
+    multiPart: true
+    files:
+      - name: avatar
         maxCount: 1
-      - name: 'gallery'
+      - name: gallery
         maxCount: 8
 ```
 
@@ -42,17 +41,22 @@ multiPart:
 
 ### Properties
 
-_path_: Endpoint you want to mock _method_: HTTP Method _validate_: (Optional)
+-_path_: Endpoint you want to mock
+
+_method_: (Default: GET) HTTP Method
+
+_validate_: (Optional)
 
     _body_: Object with values to validate for success
     _queryString_: Object with values to validate for success
 
-_success_: Name of the yaml file that has the blueprint for the success payload
-_error_: Name of the yaml file that has the blueprint for the error payload
+_success_: (Optional) Name of the yaml file that has the blueprint for the
+success payload
 
-## `multiPart`
+_error_: (Optional) Name of the yaml file that has the blueprint for the error
+payload
 
-### Properties
+_multiPart_: (Optional) List of InputFiles to emulate
 
 _name_: `name` of your InputFile _maxCount_: Max amount of files allowed on the
 queue

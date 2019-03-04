@@ -13,8 +13,9 @@ rest:
     validate:
       queryString:
         token: my-secret
-multiPart:
-  - name: avatar
-    maxCount: 1
-  - name: gallery
-    maxCount: 8
+  - path: /avatar
+    multiPart:
+      - name: avatar
+        maxCount: 1
+      - name: gallery
+        maxCount: 8
