@@ -23,15 +23,17 @@ const tryMultiPart = (ctx, params) => {
   }
 };
 
-const tryRest = (ctx, { path, method = 'get', queryString, body }) => {
+const tryRest = (ctx, params) => {
   const [e] = rest.filter(
-    e => e.method === method.toLowerCase() && e.path === path,
+    ({ method = 'get', path }) =>
+      method.toUpperCase() === params.method.toUpperCase() &&
+      path === params.path,
   );
   if (e) {
     const type = 'REST';
-    const payload = generatePayload({ ...e, path, method, queryString, body });
+    const payload = generatePayload({ ...e, ...params });
     jsonResponse(ctx, payload);
-    log.params({ type, payload, path, method, queryString, body });
+    log.params({ type, payload, ...params });
     return true;
   }
 };
@@ -52,6 +54,7 @@ export default () => async ctx => {
     queryString: qs.parse(queryString),
     body,
   };
+
   if (path.startsWith(API_PATH)) {
     pipe(
       () => tryMultiPart(ctx, params),

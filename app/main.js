@@ -9,13 +9,13 @@ const { PORT = 3000 } = process.env;
 const app = new Koa();
 
 export default new Promise(resolve => {
-  app
+  const server = app
     .use(bodyParser())
     .use(router())
     .use(cors())
     .listen(PORT, () => {
       log.success(`Server started on port ${PORT}`); // eslint-disable-line
-      resolve(app);
+      resolve(server);
     });
 });
 
